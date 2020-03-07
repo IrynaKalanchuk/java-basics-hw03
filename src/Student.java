@@ -4,23 +4,33 @@ import java.util.List;
 public class Student {
   private int rating;
   private String name;
-  static Student s1, s2, s3;
   static double averageRating;
+  static List<Student> students = new ArrayList<>();
 
   // TODO implement Student class according to the instructions provided in the README.md file
 
   public Student(String name) {
     //TODO initialize name
     this.name = name;
+    students.add(this);
   }
 
   public Student() {
-
+    students.add(this);
   }
 
   public static double getAvgRating() {
     // TODO return average rating of all students
-    return averageRating;
+    averageRating = 0;
+
+    if (students.size()==0)
+      return 0;
+
+    for (Student s : students) {
+      averageRating += s.getRating();
+    }
+
+    return averageRating/students.size();
   }
 
   public String getName() {
@@ -48,12 +58,11 @@ public class Student {
 
   public void changeRating(int rating) {
     this.rating = rating;
-    int sumRating = s1.getRating() + s2.getRating() + s3.getRating();
-    averageRating = ((double)sumRating)/3;
     // TODO change this student's rating and average rating of all students
   }
 
   public static void removeStudent(Student student) {
+    students.remove(student);
     // TODO remove student
   }
 
@@ -64,9 +73,9 @@ public class Student {
   }
 
   public static void main (String[] args) {
-    s1 = new Student();
-    s2 = new Student();
-    s3 = new Student();
+    Student s1 = new Student();
+    Student s2 = new Student();
+    Student s3 = new Student();
 
     s1.setName("Iryna");
     s2.setName("Olena");
@@ -76,10 +85,7 @@ public class Student {
     s2.setRating(20);
     s3.setRating(12);
 
-    int sumRating = s1.getRating() + s2.getRating() + s3.getRating();
-    averageRating = ((double)sumRating)/3;
-
-    System.out.println(getAvgRating());
+    System.out.println("Average rating is: "+ getAvgRating());
 
     if (s1.betterStudent(s2)) {
       System.out.println(s1.getName() + " is the better student than " + s2.getName());
@@ -89,7 +95,7 @@ public class Student {
 
     s1.changeRating(22);
 
-    System.out.println(getAvgRating());
+    System.out.println("Average rating is: "+ getAvgRating());
 
     if (s1.betterStudent(s2)) {
       System.out.println(s1.getName() + " is the better student than " + s2.getName());
