@@ -1,36 +1,23 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Student {
   private int rating;
   private String name;
-  static double averageRating;
-  static List<Student> students = new ArrayList<>();
-
-  // TODO implement Student class according to the instructions provided in the README.md file
+  static double totalRating;
+  static int count;
 
   public Student(String name) {
-    //TODO initialize name
     this.name = name;
-    students.add(this);
+    count++;
   }
 
   public Student() {
-    students.add(this);
+    count++;
   }
 
   public static double getAvgRating() {
-    // TODO return average rating of all students
-    averageRating = 0;
-
-    if (students.size()==0)
+    if (count == 0)
       return 0;
 
-    for (Student s : students) {
-      averageRating += s.getRating();
-    }
-
-    return averageRating/students.size();
+    return totalRating/count;
   }
 
   public String getName() {
@@ -38,7 +25,6 @@ public class Student {
   }
 
   public void setName(String name) {
-    // TODO set student's name
     this.name = name;
   }
 
@@ -47,28 +33,27 @@ public class Student {
   }
 
   public void setRating(int rating) {
-    // TODO initialize rating;
     this.rating = rating;
+    totalRating += rating;
   }
 
   public boolean betterStudent(Student student) {
-    // TODO return the result of comparing this.student's rating with the student's rating
     return rating >= student.getRating();
   }
 
   public void changeRating(int rating) {
+    totalRating -= this.rating;
     this.rating = rating;
-    // TODO change this student's rating and average rating of all students
+    totalRating += rating;
   }
 
   public static void removeStudent(Student student) {
-    students.remove(student);
-    // TODO remove student
+    count--;
+    totalRating-=student.getRating();
   }
 
   @Override
   public String toString() {
-    // TODO return String with name and rating of this student
     return name+rating;
   }
 
